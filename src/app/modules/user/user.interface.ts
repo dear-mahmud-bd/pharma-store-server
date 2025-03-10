@@ -10,6 +10,7 @@ export interface TUser {
   _id: string;
   name: string;
   email: string;
+  image_url: string;
   password: string;
   role: UserType;
   phone?: string;

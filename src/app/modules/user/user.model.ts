@@ -22,6 +22,10 @@ export const UserSchema = new Schema<TUser, UserModel>(
       required: true,
       select: 0,
     },
+    image_url: {
+      type: String,
+      default: '',
+    },
     phone: {
       type: String,
       default: '',
