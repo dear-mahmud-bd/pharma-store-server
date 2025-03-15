@@ -13,7 +13,24 @@ const registerUser = async (payload: TUser) => {
     );
   }
   const result = await User.create(payload);
-  return result;
+
+  const JwtPayload = {
+    email: payload.email,
+    role: result.role,
+  };
+  const accessToken = createToken(
+    JwtPayload,
+    config.jwt_access_token as string,
+    Number(config.jwt_access_token_expires),
+  );
+
+  const refreshToken = createToken(
+    JwtPayload,
+    config.jwt_refresh_token as string,
+    Number(config.jwt_refresh_token_expires),
+  );
+
+  return { accessToken, refreshToken };
 };
 
 const loginUser = async (payload: TUser) => {

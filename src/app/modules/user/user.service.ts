@@ -45,6 +45,10 @@ const changeUserPassword = async (
   return { message: 'Password changed successfully.' };
 };
 
+const getProfileDataFromDB = async (email: string) => {
+  return await User.findOne({ email });
+};
+
 const updateProfileImageFromDB = async (
   email: string,
   userEmail: string,
@@ -83,6 +87,7 @@ const updateProfileFromDB = async (
 
 export const UserServices = {
   changeUserPassword,
+  getProfileDataFromDB,
   updateProfileImageFromDB,
   updateProfileFromDB,
 };

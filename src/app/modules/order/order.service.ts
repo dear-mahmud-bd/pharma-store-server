@@ -30,7 +30,7 @@ const createOrderIntoDB = async (payload: IOrder) => {
       'A prescription is required for the medication you ordered.',
     );
   }
-  payload.sub_total = subTotal;
+  payload.sub_total = subTotal + 100;
 
   // decrease stock after successful validation
   for (const item of payload.items) {
@@ -51,7 +51,7 @@ const updateOrderStatusFromDB = async (id: string, status: string) => {
     { new: true, runValidators: true },
   );
   if (!order) throw new AppError(httpStatus.NOT_FOUND, 'Order not found');
-  return {};
+  return order;
 };
 
 const getSingleOrderFromDB = async (id: string) => {
@@ -64,9 +64,14 @@ const getUsersAllOrderFromDB = async (email: string) => {
   return await Order.find({ 'user.email': email }).populate('items.medicine');
 };
 
+const getAllOrderFromDB = async () => {
+  return await Order.find().populate('items.medicine');
+};
+
 export const OrderService = {
   createOrderIntoDB,
   updateOrderStatusFromDB,
   getSingleOrderFromDB,
   getUsersAllOrderFromDB,
+  getAllOrderFromDB,
 };

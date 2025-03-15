@@ -12,4 +12,6 @@ export default {
   jwt_access_token_expires: process.env.JWT_ACCESS_TOKEN_EXPIRES,
   jwt_refresh_token: process.env.JWT_REFRESH_TOKEN,
   jwt_refresh_token_expires: process.env.JWT_REFRESH_TOKEN_EXPIRES,
+  sslcommerz_store_id: process.env.SSLCOMMERZ_STORE_ID,
+  sslcommerz_store_password: process.env.SSLCOMMERZ_STORE_PASSWORD,
 };

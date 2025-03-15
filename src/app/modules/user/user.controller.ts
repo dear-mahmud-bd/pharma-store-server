@@ -26,6 +26,18 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const myProfileData = catchAsync(async (req: Request, res: Response) => {
+  const userData = req.user;
+  const userEmail = userData.email;
+  const result = await UserServices.getProfileDataFromDB(userEmail);
+  sendResponse(res, {
+    success: true,
+    message: 'Profile data retrieve successfully',
+    statusCode: httpStatus.OK,
+    data: result,
+  });
+});
+
 const updateProfileImage = catchAsync(async (req: Request, res: Response) => {
   const { email, image_url } = req.body;
   const userData = req.user;
@@ -72,6 +84,7 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
 
 export const UserControllers = {
   changePassword,
+  myProfileData,
   updateProfileImage,
   updateProfile,
 };

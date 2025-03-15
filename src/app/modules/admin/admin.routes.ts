@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { AuthGuard } from '../../middlewares/authGuard';
 import { USER_ROLE } from '../user/user.constant';
 import { AdminControllers } from './admin.controller';
+import { OrderController } from '../order/order.controller';
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.patch(
   AuthGuard(USER_ROLE.admin),
   AdminControllers.updateUserBlockStatus,
 );
+router.get('/order', AuthGuard(USER_ROLE.admin), OrderController.getAllOrders);
 
 export const AdminRoutes = router;

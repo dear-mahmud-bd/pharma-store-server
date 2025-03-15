@@ -28,5 +28,10 @@ router.get(
   AuthGuard(USER_ROLE.customer, USER_ROLE.admin),
   OrderController.getUsersAllOrders,
 );
+router.get(
+  '/all-user/admin',
+  AuthGuard(USER_ROLE.admin),
+  OrderController.getAllOrders,
+);
 
 export const OrderRoutes = router;

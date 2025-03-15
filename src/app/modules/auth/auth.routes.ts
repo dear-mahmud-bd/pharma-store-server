@@ -19,6 +19,12 @@ router.post(
   AuthControllers.login,
 );
 
+router.get(
+  '/my-profile',
+  // provide email
+  AuthGuard(USER_ROLE.admin, USER_ROLE.customer),
+  UserControllers.myProfileData,
+);
 router.patch(
   '/change-password',
   // provide email
