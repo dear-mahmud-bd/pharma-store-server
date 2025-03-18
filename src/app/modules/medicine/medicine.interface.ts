@@ -1,10 +1,23 @@
 import { Model, Types } from 'mongoose';
+export enum MedicineCategory {
+  PAIN_RELIEF = 'Pain Relief',
+  ANTIBIOTICS = 'Antibiotics',
+  SUPPLEMENTS = 'Supplements',
+  GASTROINTESTINAL = 'Gastrointestinal',
+  CARDIOVASCULAR = 'Cardiovascular',
+  DIABETES_MANAGEMENT = 'Diabetes Management',
+  RESPIRATORY = 'Respiratory',
+  NEUROLOGICAL = 'Neurological',
+  DERMATOLOGY = 'Dermatology',
+  ALLERGY_IMMUNOLOGY = 'Allergy & Immunology',
+}
 
 export interface TMedicine {
   _id: Types.ObjectId;
   name: string;
   medi_image: string;
   description: string;
+  category: MedicineCategory;
   price: number;
   stock: number;
   requiresPrescription: boolean;

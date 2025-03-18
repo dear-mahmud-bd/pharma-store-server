@@ -18,6 +18,8 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 const updateUserRole = catchAsync(async (req: Request, res: Response) => {
   const { userId } = req.params;
   const { role } = req.body;
+  console.log(role);
+
   const updatedUser = await AdminServices.updateUserRole(userId, role);
   sendResponse(res, {
     success: true,

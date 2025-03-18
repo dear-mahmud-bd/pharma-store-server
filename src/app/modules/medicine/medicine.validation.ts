@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { MedicineCategory } from './medicine.interface';
 
 const medicineValidationSchema = z.object({
   body: z.object({
@@ -15,6 +16,21 @@ const medicineValidationSchema = z.object({
       .string({ required_error: 'Description is required' })
       .trim()
       .min(10, 'Description must be at least 10 characters long.'),
+    category: z.enum(
+      [
+        MedicineCategory.PAIN_RELIEF,
+        MedicineCategory.ANTIBIOTICS,
+        MedicineCategory.SUPPLEMENTS,
+        MedicineCategory.GASTROINTESTINAL,
+        MedicineCategory.CARDIOVASCULAR,
+        MedicineCategory.DIABETES_MANAGEMENT,
+        MedicineCategory.RESPIRATORY,
+        MedicineCategory.NEUROLOGICAL,
+        MedicineCategory.DERMATOLOGY,
+        MedicineCategory.ALLERGY_IMMUNOLOGY,
+      ],
+      { required_error: 'Medicine category is required' },
+    ),
     price: z
       .number({ required_error: 'Price is required' })
       .min(0, 'Price cannot be negative'),

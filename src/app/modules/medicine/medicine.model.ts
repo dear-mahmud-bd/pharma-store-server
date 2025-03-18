@@ -1,5 +1,9 @@
 import { model, Schema } from 'mongoose';
-import { TMedicine, MedicineModel } from './medicine.interface';
+import {
+  TMedicine,
+  MedicineModel,
+  MedicineCategory,
+} from './medicine.interface';
 
 export const MedicineSchema = new Schema<TMedicine, MedicineModel>(
   {
@@ -17,6 +21,12 @@ export const MedicineSchema = new Schema<TMedicine, MedicineModel>(
     description: {
       type: String,
       required: true,
+      trim: true,
+    },
+    category: {
+      type: String,
+      required: true,
+      enum: Object.values(MedicineCategory),
       trim: true,
     },
     price: {

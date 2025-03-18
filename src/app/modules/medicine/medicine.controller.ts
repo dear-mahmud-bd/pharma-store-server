@@ -81,7 +81,7 @@ const getSingleMedicine = catchAsync(async (req, res) => {
 });
 
 const getAllMedicine = catchAsync(async (req, res) => {
-  const result = await MedicineServices.getAllMedicineFromDB();
+  const result = await MedicineServices.getAllMedicineFromDB(req.query);
   sendResponse(res, {
     success: true,
     message: 'All Medicine is retrieved succesfully',

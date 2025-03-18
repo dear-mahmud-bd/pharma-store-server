@@ -86,8 +86,79 @@ const getSingleMedicineFromDB = async (id: string) => {
   return result;
 };
 
-const getAllMedicineFromDB = async () => {
-  return await Medicine.find();
+const getAllMedicineFromDB = async (query: Record<string, unknown>) => {
+  const queryObj = { ...query };
+
+  // Search functionality
+  const medicineSearchableFields = [
+    'name',
+    'manufacturer.name',
+    'description',
+    'category',
+  ];
+  let search = '';
+  if (query?.search) {
+    search = query.search as string;
+  }
+  const searchQuery = Medicine.find({
+    $or: medicineSearchableFields.map((field) => ({
+      [field]: { $regex: search, $options: 'i' },
+    })),
+  });
+
+  // Filtering functionality
+  const excludeFields = [
+    'search',
+    'category',
+    'sortOrder',
+    'minPrice',
+    'maxPrice',
+    'prescription', // Exclude prescription field
+  ];
+  excludeFields.forEach((el) => delete queryObj[el]);
+
+  // Construct filter object
+  const filter: Record<string, unknown> = {};
+
+  // Filtering by price range
+  if (query?.minPrice || query?.maxPrice) {
+    filter.price = {};
+    if (query?.minPrice) {
+      (filter.price as Record<string, number>)['$gte'] = Number(query.minPrice);
+    }
+    if (query?.maxPrice) {
+      (filter.price as Record<string, number>)['$lte'] = Number(query.maxPrice);
+    }
+  }
+
+  // Filtering by category
+  if (query?.category) {
+    filter.category = query.category as string;
+  }
+
+  // Filtering by prescription (required or not-required)
+  if (query?.prescription) {
+    if (query.prescription === 'required') {
+      filter.requiresPrescription = true;
+    } else if (query.prescription === 'not-required') {
+      filter.requiresPrescription = false;
+    }
+  }
+
+  const filterQuery = searchQuery.find(filter);
+
+  // Sorting functionality
+  let sortBy = 'price';
+  if (query?.sortBy) {
+    sortBy = query.sortBy as string;
+  }
+  if (query?.sortOrder) {
+    const sortOrder = query.sortOrder === 'desc' ? '-' : '';
+    sortBy = `${sortOrder}${sortBy}`;
+  }
+
+  const result = await filterQuery.sort(sortBy);
+  return result;
 };
 
 export const MedicineServices = {
