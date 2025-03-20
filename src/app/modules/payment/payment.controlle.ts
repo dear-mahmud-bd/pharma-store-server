@@ -40,7 +40,7 @@ const verifyPayment = catchAsync(async (req: Request, res: Response) => {
     status,
   );
   if (updatedOrder.status === 'processing') {
-    res.redirect(`http://localhost:3000/payment-success`);
+    res.redirect(`https://pharma-client-07.vercel.app/payment-success`);
   } else {
     sendResponse(res, {
       success: false,
@@ -51,7 +51,7 @@ const verifyPayment = catchAsync(async (req: Request, res: Response) => {
 });
 
 const paymentFail = catchAsync(async (req: Request, res: Response) => {
-  res.redirect(`http://localhost:3000/payment-fail`);
+  res.redirect(`https://pharma-client-07.vercel.app/payment-fail`);
 });
 
 export const PaymentController = {

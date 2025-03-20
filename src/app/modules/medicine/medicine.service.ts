@@ -157,8 +157,22 @@ const getAllMedicineFromDB = async (query: Record<string, unknown>) => {
     sortBy = `${sortOrder}${sortBy}`;
   }
 
-  const result = await filterQuery.sort(sortBy);
-  return result;
+  const page = Number(query.page) || 1;
+  const limit = Number(query.limit) || 9;
+  const skip = (page - 1) * limit;
+
+  const totalItems = await Medicine.countDocuments(filter);
+  const totalPages = Math.ceil(totalItems / limit);
+
+  const result = await filterQuery.sort(sortBy).skip(skip).limit(limit);
+
+  // return result;
+  return {
+    medicines: result,
+    totalItems,
+    currentPage: page,
+    totalPages,
+  };
 };
 
 export const MedicineServices = {

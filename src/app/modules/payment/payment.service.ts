@@ -12,10 +12,10 @@ const initiatePayment = async (order: IOrder, orderId: string) => {
     total_amount: order.sub_total,
     currency: 'BDT',
     tran_id: transactionId, // Unique transaction ID
-    success_url: `http://localhost:5000/api/payment/success/${transactionId}/${orderId}`,
-    fail_url: `http://localhost:5000/api/payment/fail`,
-    cancel_url: `http://localhost:3000/client.vercel.app/cancel`,
-    ipn_url: `http://localhost:3000/client.vercel.app/ipn`,
+    success_url: `https://pharma-server-07.vercel.app/api/payment/success/${transactionId}/${orderId}`,
+    fail_url: `https://pharma-server-07.vercel.app/api/payment/fail`,
+    cancel_url: `https://pharma-client-07.vercel.app/cancel`,
+    ipn_url: `https://pharma-client-07.vercel.app/ipn`,
 
     shipping_method: 'Courier',
     product_name: 'Computer.',
